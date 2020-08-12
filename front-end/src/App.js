@@ -10,27 +10,41 @@ export default class App extends Component {
 
     this.state = {
       candidates: [],
+      previousVotes: [],
+      previousPercentages: [],
     };
 
     this.interval = null;
   }
 
   componentDidMount() {
+    const url = 'http://localhost:8080/votes';
+
     this.interval = setInterval(() => {
-      fetch('http://localhost:8080/votes')
+      fetch(url)
         .then((res) => {
           return res.json();
         })
         .then((json) => {
+          const { candidates } = this.state;
+          const previousVotes = candidates.map(({ id, votes }) => {
+            return { id, votes };
+          });
+          const previousPercentages = candidates.map(({ id, percentage }) => {
+            return { id, percentage };
+          });
+
           this.setState({
             candidates: json.candidates,
+            previousVotes,
+            previousPercentages,
           });
         });
     }, 1000);
   }
 
   render() {
-    const { candidates } = this.state;
+    const { candidates, previousVotes, previousPercentages } = this.state;
 
     if (candidates.length === 0) {
       return <Spinner description="Carregando..." />;
@@ -39,7 +53,11 @@ export default class App extends Component {
     return (
       <div className="container">
         <Header>Votação</Header>
-        <Candidates candidates={candidates} />
+        <Candidates
+          previousVotes={previousVotes}
+          previousPercentages={previousPercentages}
+          candidates={candidates}
+        />
       </div>
     );
   }

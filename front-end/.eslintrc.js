@@ -19,6 +19,7 @@ module.exports = {
     'no-undef': 'off',
     'react/jsx-filename-extension': 'off',
     'react/prop-types': 'off',
-    'react/jsx-one-expression-per-line': 'off'
+    'react/jsx-one-expression-per-line': 'off',
+    'react/no-access-state-in-setstate': 'off',
   },
 };
