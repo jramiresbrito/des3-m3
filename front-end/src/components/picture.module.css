@@ -1,5 +1,6 @@
 .picture {
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
+  margin-right: 16px;
 }
